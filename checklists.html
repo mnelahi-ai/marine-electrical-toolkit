@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrical Commissioning Checklists</title>
+<style>
+  :root{--bg:#0f1722;--panel:#16222f;--panel2:#1d2c3d;--line:#2b4258;--txt:#e8eef4;--mut:#8fa6ba;--acc:#34b8a0;--acc2:#3d9be9;--err:#e96a5a;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+  header{padding:22px 28px 14px;border-bottom:1px solid var(--line)}
+  header h1{font-size:21px;font-weight:600} header p{color:var(--mut);font-size:13px;margin-top:4px}
+  .bar{display:flex;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line);font-size:13px}
+  .bar a{color:var(--mut);text-decoration:none}.bar a.on{color:var(--acc);font-weight:600}
+  main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  select,input{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:9px 12px;font-size:14px}
+  select{min-width:320px}
+  .btn{background:var(--acc2);color:#fff;border:none;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .prog{height:8px;background:var(--panel);border-radius:4px;margin:10px 0 18px;overflow:hidden}
+  .prog div{height:100%;background:var(--acc);width:0%;transition:width .2s}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:var(--mut)}
+  td input[type=text]{width:100%;padding:5px}
+  .st{display:flex;gap:4px}
+  .st button{border:1px solid var(--line);background:var(--panel);color:var(--mut);border-radius:5px;padding:4px 9px;cursor:pointer;font-size:12px}
+  .st button.p{background:#1d4d3e;color:#7be0c3;border-color:#2c7a60}
+  .st button.f{background:#5a2420;color:#ffb3a8;border-color:#8a3b34}
+  .st button.n{background:#3a3f24;color:#e0dc8a;border-color:#6a6f3a}
+  footer{border-top:1px solid var(--line);padding:16px 28px;color:var(--mut);font-size:11.5px;line-height:1.6}
+  @media print{.bar,.row,.btn,header p{display:none}body{background:#fff;color:#000}th,td{border-color:#999}}
+</style>
+</head>
+<body>
+<header>
+  <h1>✅ Electrical Commissioning Checklists</h1>
+  <p>Generic pre-commissioning &amp; energization checklists. Fill project details yourself — no project data embedded. Export CSV or print as record.</p>
+</header>
+<div class="bar">
+  <a href="index.html">Calculators</a><a href="checklists.html" class="on">Checklists</a>
+  <a href="testforms.html">Test Forms</a><a href="reference.html">Reference</a>
+</div>
+<main>
+  <div class="row">
+    <select id="tpl" onchange="load()"></select>
+    <input id="proj" type="text" placeholder="Project / Tag No.">
+    <input id="insp" type="text" placeholder="Inspector / Date">
+    <button class="btn" onclick="exportCSV()">Export CSV</button>
+    <button class="btn" onclick="window.print()">Print</button>
+  </div>
+  <div class="prog"><div id="pb"></div></div>
+  <table id="tbl"><thead><tr><th style="width:36px">#</th><th>Check item</th><th style="width:150px">Status</th><th style="width:30%">Remarks / Reference</th></tr></thead><tbody></tbody></table>
+</main>
+<footer>
+  Generic templates based on common industry practice (IEC 61439, IEC 60076, IEC 60092, IEEE/NETA-style acceptance testing). Adapt to your project specification, class rules and local regulations. Completion of a checklist is not a substitute for the OEM manual or the project ITP.
+</footer>
+<script>
+const T = {
+"HV Switchgear — Pre-commissioning":[
+ "Visual inspection: no transit damage, corrosion, foreign objects; arc flash labels fitted",
+ "Nameplate data matches drawings (kV, kA, A, single line diagram)",
+ "Earthing of frame, cable armour and screens completed and torque-checked",
+ "Busbar joints torque-checked per OEM table and witness-marked",
+ "Insulation resistance phase-phase / phase-earth recorded (per IR test table)",
+ "HV pressure / hi-pot test completed per OEM & spec; certificate raised",
+ "CB rack-in/rack-out, interlocks, shutters and key exchange tested",
+ "Protection relays: settings loaded per approved study; secondary injection passed",
+ "CT/VT ratios, polarity and magnetisation curves verified",
+ "Heaters, panel lighting, auxiliary supplies functional; doors/gaskets sealed",
+ "Partial discharge / VLF test (if specified) recorded",
+ "All temporary earths removed; pre-energization sign-off obtained"],
+"LV Switchboard — Pre-commissioning":[
+ "Visual: damage, cleanliness, vermin sealing, IP rating integrity, labels per SLD",
+ "Nameplate vs drawings (V, A, kA Icw/Icu, form of separation)",
+ "All connections torque-checked per OEM table (busbars, lugs, neutral, earth)",
+ "Insulation resistance L-L / L-N / L-E ≥ spec minimum, recorded",
+ "Earth continuity main frame → earth bar → all sections verified",
+ "ACB/MCCB settings (Ir, Isd, Ii, Ig, t) per approved coordination study",
+ "Metering CTs ratio/polarity checked; meters configured and reading",
+ "Interlocks (bus-tie, generator, shore) and castell keys functional",
+ "Phase rotation and busbar phasing verified",
+ "Control/alarm wiring point-to-point tested; lamp/annunciator test passed",
+ "Space heaters and anti-condensation circuits functional",
+ "Covers, shrouds, danger labels reinstated; pre-energization sign-off"],
+"LV Transformer — Pre-commissioning":[
+ "Visual & nameplate check vs spec (kVA, vector group, taps, impedance)",
+ "Winding insulation resistance HV-LV / HV-E / LV-E recorded with temperature",
+ "Winding resistance per phase recorded and balanced",
+ "Ratio test on all taps; vector group confirmed",
+ "Tap changer position set per study; locked",
+ "Core/frame earthing single-point verified",
+ "Temperature devices (WTI/PT100) tested; trip/alarm setpoints set",
+ "Cooling (AN/AF) fans and controls functional",
+ "Cable boxes: clearances, gland plates, shrouding, phasing correct",
+ "Energization checklist & inrush precautions agreed; sign-off"],
+"VSD / VFD — Pre-commissioning":[
+ "Visual, nameplate vs motor & supply data; firmware version recorded",
+ "Power cabling: screened motor cable, EMC glands 360°, separation from signal",
+ "IMPORTANT: insulation test with VSD DISCONNECTED (electronics damage risk)",
+ "Earthing: PE + clean earth/screen per OEM EMC guidelines",
+ "Motor parameters entered (FLC, V, Hz, RPM, thermal model)",
+ "Protection set: OL, stall, phase loss, over/under-voltage, earth fault",
+ "Analogue/digital I/O loop-tested to DCS/PLC",
+ "Cooling fans/filters clear; heatsink unobstructed",
+ "Bump test: rotation direction; correct at motor",
+ "Ramp times, skip frequencies, PID config per process datasheet; sign-off"],
+"Generator (EGEN) — Pre-commissioning":[
+ "Visual, nameplate vs spec (kW/kVA, V, PF, RPM); oil/coolant levels",
+ "Stator/rotor insulation resistance + PI recorded",
+ "AVR settings per spec; voltage trim at no-load verified",
+ "Protection: reverse power, over/under V & Hz, diff (if fitted) injected & passed",
+ "Governor droop/isoch mode set per system design",
+ "Battery start system, charger, redundancy tested",
+ "Fuel, lube, cooling, exhaust systems commissioned (mechanical clearance)",
+ "Emergency stop and shutdown chains proven",
+ "No-load run: voltage, frequency, phase rotation recorded",
+ "Load test (load bank or ship load) at 25/50/75/100/110%; readings recorded",
+ "Synchronising / load sharing with other sources proven; sign-off"],
+"UPS / DDUPS — Pre-commissioning":[
+ "Visual, nameplate, battery type/quantity vs design (Ah, cells, float V)",
+ "Battery room/compartment ventilation and signage per spec",
+ "DC bus insulation resistance recorded (battery disconnected as required)",
+ "Charger float/boost voltages set; current limit set",
+ "Battery discharge/autonomy test per spec duration; capacity ≥ design",
+ "Bypass (static + maintenance) transfer tests — no-break verified",
+ "Alarms to AMS/BMS: mains fail, charger fail, low battery, earth fault",
+ "Earth fault monitoring on DC system functional",
+ "Recharge time within spec after discharge test",
+ "Load transfer + redundancy (N+1 / parallel) proven; sign-off"],
+"Busway / Busduct — Pre-commissioning":[
+ "Visual: joints aligned, supports per span table, expansion units at building joints",
+ "Joint bolts torque-marked per OEM (calibrated wrench records)",
+ "Insulation resistance per section and end-to-end, recorded",
+ "Earth continuity along housing/earth bar verified",
+ "Phasing confirmed end-to-end",
+ "Fire barriers/penetration seals reinstated at deck/bulkhead crossings",
+ "IP integrity: covers, tap-off units, end closures fitted",
+ "Ductor/contact resistance across sample joints within OEM limit",
+ "No load applied until all sections signed off; energization permit"],
+"HV/LV Cabling — Installation & Test":[
+ "Cable type, size and route per approved cable schedule (cross-check tags)",
+ "Bending radius and pulling tension within manufacturer limits",
+ "Segregation: HV/LV/instrument spacing or barriers per spec",
+ "Glanding: correct gland type/size, armour clamped, shroud fitted, earth tag",
+ "MCT/penetration sealing reinstated and certified (fire/watertight)",
+ "Tray/ladder supports, tie-down spacing per standard (incl. vertical runs)",
+ "Continuity and phasing through every core verified",
+ "Insulation resistance per cable recorded (test voltage per class)",
+ "HV cables: sheath test / VLF per spec, recorded",
+ "Termination torque + ferrules/markers both ends; loop check to schedule; sign-off"],
+"Power Turn-On — Site Energization":[
+ "All construction complete certificates received for the section energized",
+ "Energization sequence and switching programme approved & communicated",
+ "Permit to work closed/transferred; isolation locks removed per LOTO register",
+ "Temporary earths register reconciled — ALL removed",
+ "Protection enabled with commissioning settings; trip test from master",
+ "Communication checked: control room ↔ switchroom ↔ field",
+ "PPE, arc flash boundary, rescue kit, CO2/extinguishers in place",
+ "Barriers/signage posted; non-essential personnel cleared",
+ "Energize per sequence; soak period observed; IR/thermal scan after load",
+ "Post-energization readings recorded (V, A, rotation, earth leakage); handover"],
+"Documentation — Pre-handover":[
+ "As-built drawings red-lined and submitted (SLD, schematics, layouts)",
+ "All test records compiled (IR, ductor, injection, load tests) with serial numbers",
+ "Calibration certificates for test instruments valid at test date",
+ "Relay setting files (as-left) exported and archived",
+ "OEM manuals, spare parts lists, special tools register handed over",
+ "Certificates: compliance, readiness, class/survey endorsements",
+ "Punch list closed or carried with agreed category (A/B/C)",
+ "Training records for operators completed",
+ "Warranty terms, defect liability dates registered; final sign-off"],
+"FAT — Main Switchboard (generic)":[
+ "Build verification vs approved GA, SLD and schematics (witness)",
+ "Bill of materials vs approved makers list (breaker types/ratings)",
+ "Busbar torque + clearances/creepage spot-check (witness)",
+ "HV/flash test at works per standard (record kV, duration, leakage)",
+ "Insulation resistance before/after flash test",
+ "Functional: every breaker open/close/trip local + remote",
+ "Interlocks, bus-tie logic, auto-changeover scenarios simulated",
+ "Protection secondary injection all relays (record pickup/time)",
+ "Metering/AMS signals simulated end-to-end at terminals",
+ "Paint/IP/labels; packing & shipping prep; FAT punch list signed by parties"],
+"FAT — Ex-Proof Distribution Board":[
+ "Certificates: Ex certificate number matches nameplate & project Ex register (HAE)",
+ "Enclosure: certified entries only, unused entries plugged with certified plugs",
+ "Gland selection certified for cable type & zone; sealing per drawing",
+ "Internal components per certified schedule of components (no substitutions)",
+ "Terminal max dissipated power within certificate table (heat calc attached)",
+ "Creepage/clearance maintained; no field modifications to enclosure",
+ "Earth continuity internal/external lugs verified",
+ "IR test at appropriate voltage; functional check of all ways",
+ "T-class and ambient range marking vs design ambient verified",
+ "IP test certificate / gasket integrity; documentation pack complete"]
+};
+const sel=document.getElementById('tpl'), tb=document.querySelector('#tbl tbody');
+Object.keys(T).forEach(k=>{const o=document.createElement('option');o.textContent=k;sel.appendChild(o);});
+let state=[];
+function load(){
+  const items=T[sel.value]; state=items.map(()=>({s:'',r:''})); tb.innerHTML='';
+  items.forEach((it,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${i+1}</td><td>${it}</td><td><div class="st">
+      <button onclick="st(${i},'PASS',this)">Pass</button>
+      <button onclick="st(${i},'FAIL',this)">Fail</button>
+      <button onclick="st(${i},'N/A',this)">N/A</button></div></td>
+      <td><input type="text" oninput="state[${i}].r=this.value"></td>`;
+    tb.appendChild(tr);
+  });
+  prog();
+}
+function st(i,v,btn){
+  state[i].s=v;
+  const bs=btn.parentElement.querySelectorAll('button');
+  bs.forEach(b=>b.className='');
+  btn.className=v==='PASS'?'p':v==='FAIL'?'f':'n';
+  prog();
+}
+function prog(){
+  const done=state.filter(x=>x.s).length;
+  document.getElementById('pb').style.width=(state.length?100*done/state.length:0)+'%';
+}
+function exportCSV(){
+  const items=T[sel.value];
+  let csv='Checklist,'+JSON.stringify(sel.value)+'\nProject,'+JSON.stringify(document.getElementById('proj').value)+'\nInspector/Date,'+JSON.stringify(document.getElementById('insp').value)+'\n#,Item,Status,Remarks\n';
+  items.forEach((it,i)=>{csv+=`${i+1},${JSON.stringify(it)},${state[i].s},${JSON.stringify(state[i].r)}\n`;});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download=sel.value.replace(/[^A-Za-z0-9]+/g,'_')+'.csv'; a.click();
+}
+load();
+</script>
+</body>
+</html>

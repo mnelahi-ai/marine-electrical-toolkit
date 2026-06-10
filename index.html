@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marine Electrical Engineering Toolkit</title>
+<style>
+  :root{
+    --bg:#0f1722; --panel:#16222f; --panel2:#1d2c3d; --line:#2b4258;
+    --txt:#e8eef4; --mut:#8fa6ba; --acc:#34b8a0; --acc2:#3d9be9; --warn:#e9a23d; --err:#e96a5a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--txt); min-height:100vh;}
+  header{padding:22px 28px 14px; border-bottom:1px solid var(--line);}
+  header h1{font-size:21px; font-weight:600;}
+  header p{color:var(--mut); font-size:13px; margin-top:4px;}
+  nav{display:flex; flex-wrap:wrap; gap:6px; padding:12px 28px; border-bottom:1px solid var(--line); background:var(--panel);}
+  nav button{background:var(--panel2); color:var(--mut); border:1px solid var(--line); border-radius:6px; padding:7px 12px; font-size:12.5px; cursor:pointer;}
+  nav button.on{background:var(--acc); color:#06251f; border-color:var(--acc); font-weight:600;}
+  main{max-width:880px; margin:0 auto; padding:24px 20px 60px;}
+  section{display:none;}
+  section.on{display:block;}
+  h2{font-size:17px; margin-bottom:4px;}
+  .ref{color:var(--mut); font-size:12px; margin-bottom:14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px; margin-bottom:16px;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px;}
+  label{display:block; font-size:12px; color:var(--mut); margin-bottom:4px;}
+  input,select{width:100%; background:var(--bg); color:var(--txt); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font-size:14px;}
+  .btn{margin-top:14px; background:var(--acc2); color:#fff; border:none; border-radius:6px; padding:9px 18px; font-size:14px; font-weight:600; cursor:pointer;}
+  .out{margin-top:14px; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:14px; font-size:14px; display:none; white-space:pre-line; line-height:1.7;}
+  .out b{color:var(--acc);}
+  .note{font-size:11.5px; color:var(--mut); margin-top:12px; line-height:1.5;}
+  table{width:100%; border-collapse:collapse; font-size:12.5px; margin-top:8px;}
+  th,td{border:1px solid var(--line); padding:5px 8px; text-align:left;}
+  th{background:var(--panel2); color:var(--mut); font-weight:600;}
+  footer{border-top:1px solid var(--line); padding:16px 28px; color:var(--mut); font-size:11.5px; line-height:1.6;}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚓ Marine Electrical Engineering Toolkit</h1>
+  <p>Free calculators for marine &amp; industrial electrical design. Indicative results — verify against class rules and manufacturer data.</p>
+</header>
+<div style="display:flex;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line);font-size:13px">
+  <a href="index.html" style="color:var(--acc);font-weight:600">Calculators</a>
+  <a href="checklists.html" style="color:var(--mut)">Checklists</a>
+  <a href="testforms.html" style="color:var(--mut)">Test Forms</a>
+  <a href="reference.html" style="color:var(--mut)">Reference</a>
+</div>
+<nav id="nav"></nav>
+<main id="main">
+
+<!-- 1 Short circuit -->
+<section data-t="Short Circuit (Transformer)">
+  <h2>Transformer Short Circuit Calculator</h2>
+  <p class="ref">Infinite-bus and source-limited 3-phase fault at transformer secondary. Method per IEC 60909 (simplified).</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Transformer rating (kVA)</label><input id="sc_kva" type="number" value="1000"></div>
+      <div><label>Secondary voltage L-L (V)</label><input id="sc_v" type="number" value="440"></div>
+      <div><label>Impedance Z (%)</label><input id="sc_z" type="number" value="6" step="0.1"></div>
+      <div><label>Upstream fault level (MVA, 0 = infinite bus)</label><input id="sc_mva" type="number" value="0" step="1"></div>
+    </div>
+    <button class="btn" onclick="calcSC()">Calculate</button>
+    <div class="out" id="sc_out"></div>
+    <p class="note">Ifl = S / (√3·U). Infinite bus: Isc = Ifl × 100/Z%. With source: 1/Isc_total = 1/Isc_tx + 1/Isc_source. Motor contribution not included — add per IEC 60909 / class rules if significant.</p>
+  </div>
+</section>
+
+<!-- 2 Switchboard rating -->
+<section data-t="Switchboard Rating">
+  <h2>Switchboard Rating Calculator</h2>
+  <p class="ref">Busbar/incomer rating from connected load and demand factor.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Total connected load (kW)</label><input id="sb_kw" type="number" value="800"></div>
+      <div><label>System voltage L-L (V)</label><input id="sb_v" type="number" value="440"></div>
+      <div><label>Power factor</label><input id="sb_pf" type="number" value="0.85" step="0.01"></div>
+      <div><label>Demand factor</label><input id="sb_df" type="number" value="0.8" step="0.05"></div>
+      <div><label>Design margin (%)</label><input id="sb_m" type="number" value="20"></div>
+    </div>
+    <button class="btn" onclick="calcSB()">Calculate</button>
+    <div class="out" id="sb_out"></div>
+    <p class="note">I = (kW × DF) / (√3 × V × PF) × 1000. Recommended rating = next standard size ≥ I × (1+margin). Standard sizes: 630/800/1000/1250/1600/2000/2500/3200/4000/5000/6300 A (IEC 60439/61439 preferred values).</p>
+  </div>
+</section>
+
+<!-- 3 Fuel consumption -->
+<section data-t="Fuel Consumption">
+  <h2>Fuel Consumption Estimation</h2>
+  <p class="ref">Generator/engine fuel use from power, load factor and SFOC.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Engine rated power (kW)</label><input id="fc_kw" type="number" value="500"></div>
+      <div><label>Average load factor (%)</label><input id="fc_lf" type="number" value="75"></div>
+      <div><label>SFOC (g/kWh) — from engine datasheet</label><input id="fc_sfoc" type="number" value="200"></div>
+      <div><label>Running hours</label><input id="fc_h" type="number" value="24"></div>
+      <div><label>Fuel density (kg/m³)</label><input id="fc_d" type="number" value="850"></div>
+    </div>
+    <button class="btn" onclick="calcFC()">Calculate</button>
+    <div class="out" id="fc_out"></div>
+    <p class="note">Fuel(kg) = P × LF × SFOC × h / 1000. Litres = kg / density × 1000. SFOC varies with load — use the datasheet value at the actual load point. Typical MDO density ≈ 850 kg/m³, HFO ≈ 980 kg/m³.</p>
+  </div>
+</section>
+
+<!-- 4 Motor earth fault -->
+<section data-t="Motor Earth Fault">
+  <h2>Motor Earth Fault Current</h2>
+  <p class="ref">Earth fault current for resistance-earthed and solidly-earthed systems.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>System voltage L-L (V)</label><input id="ef_v" type="number" value="6600"></div>
+      <div><label>Earthing</label><select id="ef_type"><option value="ner">Neutral Earthing Resistor (NER)</option><option value="solid">Solidly earthed</option></select></div>
+      <div><label>NER resistance (Ω)</label><input id="ef_r" type="number" value="38.1" step="0.1"></div>
+      <div><label>Fault resistance (Ω, 0 = bolted)</label><input id="ef_rf" type="number" value="0" step="0.1"></div>
+    </div>
+    <button class="btn" onclick="calcEF()">Calculate</button>
+    <div class="out" id="ef_out"></div>
+    <p class="note">NER system: Ief ≈ (V/√3)/(Rn+Rf) — neglects cable and source impedance (conservative). Solidly earthed: Ief approaches 3-phase fault level; full calc requires zero-sequence impedances per IEC 60909-0. Protection setting typically 10–20% of NER let-through.</p>
+  </div>
+</section>
+
+<!-- 5 Transformer current -->
+<section data-t="Transformer FLC">
+  <h2>Transformer Full Load Current</h2>
+  <p class="ref">Primary and secondary rated currents for 3-phase transformers.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Rating (kVA)</label><input id="tx_kva" type="number" value="1500"></div>
+      <div><label>Primary voltage L-L (V)</label><input id="tx_vp" type="number" value="6600"></div>
+      <div><label>Secondary voltage L-L (V)</label><input id="tx_vs" type="number" value="440"></div>
+    </div>
+    <button class="btn" onclick="calcTX()">Calculate</button>
+    <div class="out" id="tx_out"></div>
+    <p class="note">I = kVA × 1000 / (√3 × V). Standard ratings per IEC 60076: 100/160/250/315/400/500/630/800/1000/1250/1600/2000/2500 kVA.</p>
+  </div>
+</section>
+
+<!-- 6 Motor FLC -->
+<section data-t="Motor FLC & Trip">
+  <h2>Motor Full Load Current &amp; Trip Size</h2>
+  <p class="ref">Motor FLC with suggested overload and breaker frame size.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Motor power (kW)</label><input id="m_kw" type="number" value="75"></div>
+      <div><label>Voltage L-L (V)</label><input id="m_v" type="number" value="440"></div>
+      <div><label>Power factor</label><input id="m_pf" type="number" value="0.85" step="0.01"></div>
+      <div><label>Efficiency (%)</label><input id="m_eff" type="number" value="94" step="0.5"></div>
+      <div><label>Phase</label><select id="m_ph"><option value="3">3-phase</option><option value="1">1-phase</option></select></div>
+    </div>
+    <button class="btn" onclick="calcM()">Calculate</button>
+    <div class="out" id="m_out"></div>
+    <p class="note">3PH: I = P×1000/(√3×V×PF×η). 1PH: I = P×1000/(V×PF×η). Overload set ≈ 100–110% FLC; breaker = next standard rating ≥ 125% FLC (verify coordination with starter type and class rules). Always confirm against motor nameplate.</p>
+  </div>
+</section>
+
+<!-- 7 Volt drop -->
+<section data-t="Cable Volt Drop">
+  <h2>Cable Voltage Drop</h2>
+  <p class="ref">3-phase / 1-phase volt drop using conductor R and X per km.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Load current (A)</label><input id="vd_i" type="number" value="100"></div>
+      <div><label>Cable length one-way (m)</label><input id="vd_l" type="number" value="120"></div>
+      <div><label>R (Ω/km at operating temp)</label><input id="vd_r" type="number" value="0.524" step="0.001"></div>
+      <div><label>X (Ω/km)</label><input id="vd_x" type="number" value="0.082" step="0.001"></div>
+      <div><label>Power factor</label><input id="vd_pf" type="number" value="0.85" step="0.01"></div>
+      <div><label>System voltage (V)</label><input id="vd_v" type="number" value="440"></div>
+      <div><label>Phase</label><select id="vd_ph"><option value="3">3-phase</option><option value="1">1-phase</option></select></div>
+      <div><label>Parallel runs</label><input id="vd_n" type="number" value="1" min="1"></div>
+    </div>
+    <button class="btn" onclick="calcVD()">Calculate</button>
+    <div class="out" id="vd_out"></div>
+    <p class="note">3PH: Vd = √3×I×L×(R·cosφ + X·sinφ)/1000/n. 1PH: Vd = 2×I×L×(R·cosφ + X·sinφ)/1000/n. Typical limits: 6% feeder (SOLAS/class), 3% lighting / 5% power (shore practice). Take R and X from the cable manufacturer's datasheet at conductor operating temperature (90°C for XLPE).</p>
+  </div>
+</section>
+
+<!-- 8 Heat loss -->
+<section data-t="Panel Heat Loss">
+  <h2>Switchboard / Panel Heat Dissipation</h2>
+  <p class="ref">Total heat generation and ventilation airflow for electrical rooms / panels.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Total component heat loss (W) — sum from datasheets</label><input id="hl_w" type="number" value="3500"></div>
+      <div><label>Allowable temperature rise ΔT (°C)</label><input id="hl_dt" type="number" value="10"></div>
+      <div><label>Air density (kg/m³)</label><input id="hl_rho" type="number" value="1.2" step="0.05"></div>
+      <div><label>Air specific heat (J/kg·K)</label><input id="hl_cp" type="number" value="1005"></div>
+    </div>
+    <button class="btn" onclick="calcHL()">Calculate</button>
+    <div class="out" id="hl_out"></div>
+    <p class="note">Q (m³/s) = P / (ρ × cp × ΔT). Component losses must come from manufacturer data (breakers, contactors, VSDs, busbars I²R). For HVAC sizing, pass total W to the mechanical discipline. Method per IEC 61439-1 thermal verification.</p>
+  </div>
+</section>
+
+<!-- 9 Earth cable -->
+<section data-t="Earth Cable Sizing">
+  <h2>Protective Earth Cable Sizing (Adiabatic)</h2>
+  <p class="ref">Minimum earth conductor cross-section per IEC 60364-5-54 adiabatic equation.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Earth fault current (A)</label><input id="ec_i" type="number" value="25000"></div>
+      <div><label>Disconnection time (s)</label><input id="ec_t" type="number" value="0.5" step="0.1"></div>
+      <div><label>Conductor / insulation</label><select id="ec_k">
+        <option value="143">Copper, XLPE (k=143)</option>
+        <option value="115">Copper, PVC (k=115)</option>
+        <option value="176">Copper, bare (k=176)</option>
+        <option value="94">Aluminium, XLPE (k=94)</option>
+        <option value="76">Aluminium, PVC (k=76)</option>
+      </select></div>
+    </div>
+    <button class="btn" onclick="calcEC()">Calculate</button>
+    <div class="out" id="ec_out"></div>
+    <p class="note">S = √(I²t)/k, rounded up to next standard size: 1.5/2.5/4/6/10/16/25/35/50/70/95/120/150/185/240/300 mm². k values per IEC 60364-5-54 Table 54.2 (initial 30°C). Class rules may impose minimum sizes regardless of calculation.</p>
+  </div>
+</section>
+
+<!-- 10 Energy cost -->
+<section data-t="Energy Cost">
+  <h2>Power Tariff / Energy Cost</h2>
+  <p class="ref">Operating energy cost from load profile and tariff rate.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Average power (kW)</label><input id="et_kw" type="number" value="250"></div>
+      <div><label>Hours per day</label><input id="et_h" type="number" value="24"></div>
+      <div><label>Days</label><input id="et_d" type="number" value="30"></div>
+      <div><label>Tariff (cost per kWh)</label><input id="et_r" type="number" value="0.25" step="0.01"></div>
+      <div><label>Currency symbol</label><input id="et_c" type="text" value="$"></div>
+    </div>
+    <button class="btn" onclick="calcET()">Calculate</button>
+    <div class="out" id="et_out"></div>
+    <p class="note">Energy = kW × h × days. Cost = kWh × tariff. Enter the current tariff from your utility (e.g. SP Group for Singapore) — rates change quarterly.</p>
+  </div>
+</section>
+
+
+<!-- 11 Enclosure heat -->
+<section data-t="Enclosure Heat (Ex e)">
+  <h2>Enclosure Heat Dissipation (incl. Ex e JBs / UPS enclosures)</h2>
+  <p class="ref">Temperature rise of a sealed enclosure from internal heat load — natural convection/radiation.</p>
+  <div class="card">
+    <div class="grid">
+      <div><label>Height (m)</label><input id="en_h" type="number" value="0.6" step="0.05"></div>
+      <div><label>Width (m)</label><input id="en_w" type="number" value="0.4" step="0.05"></div>
+      <div><label>Depth (m)</label><input id="en_d" type="number" value="0.25" step="0.05"></div>
+      <div><label>Internal heat load (W) — sum of terminal I²R, gland losses, equipment losses from datasheets</label><input id="en_p" type="number" value="45"></div>
+      <div><label>Mounting</label><select id="en_m"><option value="1">Free-standing (all faces)</option><option value="0.85">Wall-mounted (rear excluded)</option><option value="0.7">Recessed / poor circulation</option></select></div>
+      <div><label>Heat transfer coeff. k (W/m²K)</label><input id="en_k" type="number" value="5.5" step="0.1"></div>
+      <div><label>Ambient (°C)</label><input id="en_ta" type="number" value="45"></div>
+      <div><label>Max permitted internal temp (°C) — e.g. T-class / component limit</label><input id="en_tm" type="number" value="70"></div>
+    </div>
+    <button class="btn" onclick="calcEN()">Calculate</button>
+    <div class="out" id="en_out"></div>
+    <p class="note">ΔT = P/(k·A·f). Effective area A from enclosure faces (IEC 60890-style); k ≈ 5.5 W/m²K painted steel, ≈ 3.5 W/m²K GRP/polyester (verify with manufacturer). For Ex e certified enclosures the certificate's maximum dissipated power table OVERRIDES this estimate — this tool is for screening only. Terminal heat per IEC 60079-7 rated values.</p>
+  </div>
+</section>
+
+</main>
+<footer>
+  <b>Disclaimer:</b> These calculators use standard published formulas (IEC 60909, IEC 61439, IEC 60364-5-54, IEC 60076) in simplified form for preliminary estimation only. Results must be verified by a qualified electrical engineer against applicable class rules (DNV, ABS, LR, NSCV, etc.), flag state requirements, and manufacturer data before use in design or construction. No liability accepted.
+</footer>
+<script>
+const sections=[...document.querySelectorAll('section')];
+const nav=document.getElementById('nav');
+sections.forEach((s,i)=>{
+  const b=document.createElement('button'); b.textContent=s.dataset.t;
+  b.onclick=()=>{sections.forEach(x=>x.classList.remove('on'));nav.querySelectorAll('button').forEach(x=>x.classList.remove('on'));s.classList.add('on');b.classList.add('on');};
+  nav.appendChild(b); if(i===0){s.classList.add('on');b.classList.add('on');}
+});
+const v=id=>parseFloat(document.getElementById(id).value)||0;
+const show=(id,html)=>{const e=document.getElementById(id);e.style.display='block';e.innerHTML=html;};
+const fmt=(n,d=1)=>n.toLocaleString('en',{maximumFractionDigits:d});
+const nextStd=(val,arr)=>arr.find(s=>s>=val)||arr[arr.length-1]+' (exceeds table)';
+
+function calcSC(){
+  const S=v('sc_kva'),U=v('sc_v'),Z=v('sc_z'),MVA=v('sc_mva');
+  if(!S||!U||!Z)return show('sc_out','Enter all values.');
+  const Ifl=S*1000/(Math.sqrt(3)*U);
+  const IscTx=Ifl*100/Z;
+  let Isc=IscTx,srcTxt='';
+  if(MVA>0){const IscSrc=MVA*1e6/(Math.sqrt(3)*U);Isc=1/(1/IscTx+1/IscSrc);srcTxt=`Source-limited fault: <b>${fmt(Isc/1000,2)} kA</b>\n`;}
+  show('sc_out',`Full load current: <b>${fmt(Ifl)} A</b>\nFault current (infinite bus): <b>${fmt(IscTx/1000,2)} kA</b>\n${srcTxt}Select switchgear with Icu ≥ calculated fault + motor contribution.`);
+}
+function calcSB(){
+  const kW=v('sb_kw'),V=v('sb_v'),PF=v('sb_pf'),DF=v('sb_df'),M=v('sb_m');
+  if(!kW||!V||!PF)return show('sb_out','Enter all values.');
+  const I=kW*DF*1000/(Math.sqrt(3)*V*PF);
+  const Id=I*(1+M/100);
+  const std=[630,800,1000,1250,1600,2000,2500,3200,4000,5000,6300];
+  show('sb_out',`Demand current: <b>${fmt(I)} A</b>\nWith ${M}% margin: <b>${fmt(Id)} A</b>\nRecommended busbar/incomer rating: <b>${nextStd(Id,std)} A</b>`);
+}
+function calcFC(){
+  const P=v('fc_kw'),LF=v('fc_lf')/100,S=v('fc_sfoc'),h=v('fc_h'),d=v('fc_d');
+  if(!P||!S||!h||!d)return show('fc_out','Enter all values.');
+  const kg=P*LF*S*h/1000, L=kg/d*1000;
+  show('fc_out',`Energy produced: <b>${fmt(P*LF*h)} kWh</b>\nFuel mass: <b>${fmt(kg)} kg</b> (${fmt(kg/1000,2)} t)\nFuel volume: <b>${fmt(L)} litres</b>\nPer hour: <b>${fmt(L/h)} L/h</b>`);
+}
+function calcEF(){
+  const V=v('ef_v'),type=document.getElementById('ef_type').value,Rn=v('ef_r'),Rf=v('ef_rf');
+  if(!V)return show('ef_out','Enter voltage.');
+  if(type==='ner'){
+    if(!Rn)return show('ef_out','Enter NER resistance.');
+    const I=(V/Math.sqrt(3))/(Rn+Rf);
+    show('ef_out',`Phase-earth voltage: <b>${fmt(V/Math.sqrt(3))} V</b>\nEarth fault current: <b>${fmt(I)} A</b>\nTypical EF pickup (10–20%): <b>${fmt(I*0.1)}–${fmt(I*0.2)} A</b>`);
+  }else{
+    show('ef_out',`Solidly earthed: bolted EF current approaches the 3-phase fault level at that point.\nUse the Short Circuit tab for magnitude, then apply zero-sequence correction per IEC 60909-0. <b>[CA]</b> Full calculation requires Z0 data — obtain from system study.`);
+  }
+}
+function calcTX(){
+  const S=v('tx_kva'),Vp=v('tx_vp'),Vs=v('tx_vs');
+  if(!S||!Vp||!Vs)return show('tx_out','Enter all values.');
+  show('tx_out',`Primary FLC: <b>${fmt(S*1000/(Math.sqrt(3)*Vp),1)} A</b>\nSecondary FLC: <b>${fmt(S*1000/(Math.sqrt(3)*Vs),1)} A</b>`);
+}
+function calcM(){
+  const P=v('m_kw'),V=v('m_v'),PF=v('m_pf'),eff=v('m_eff')/100,ph=document.getElementById('m_ph').value;
+  if(!P||!V||!PF||!eff)return show('m_out','Enter all values.');
+  const I=ph==='3'?P*1000/(Math.sqrt(3)*V*PF*eff):P*1000/(V*PF*eff);
+  const std=[6,10,16,20,25,32,40,50,63,80,100,125,160,200,250,320,400,500,630,800,1000,1250];
+  show('m_out',`Full load current: <b>${fmt(I,1)} A</b>\nOverload setting (105%): <b>${fmt(I*1.05,1)} A</b>\nBreaker (≥125% FLC): <b>${nextStd(I*1.25,std)} A</b> frame — verify coordination.`);
+}
+function calcVD(){
+  const I=v('vd_i'),L=v('vd_l'),R=v('vd_r'),X=v('vd_x'),PF=v('vd_pf'),V=v('vd_v'),n=Math.max(1,v('vd_n')),ph=document.getElementById('vd_ph').value;
+  if(!I||!L||!V)return show('vd_out','Enter all values.');
+  const sin=Math.sqrt(1-PF*PF);
+  const k=ph==='3'?Math.sqrt(3):2;
+  const Vd=k*I*L*(R*PF+X*sin)/1000/n;
+  const pct=Vd/V*100;
+  const ok=pct<=6?'within 6% feeder limit ✓':'<span style="color:var(--err)">exceeds 6% — increase size or parallel runs ✗</span>';
+  show('vd_out',`Voltage drop: <b>${fmt(Vd,2)} V</b>\nPercentage: <b>${fmt(pct,2)} %</b>\nStatus: ${ok}`);
+}
+function calcHL(){
+  const P=v('hl_w'),dT=v('hl_dt'),rho=v('hl_rho'),cp=v('hl_cp');
+  if(!P||!dT)return show('hl_out','Enter all values.');
+  const Q=P/(rho*cp*dT);
+  show('hl_out',`Heat load: <b>${fmt(P)} W</b> (${fmt(P*3.412)} BTU/h)\nRequired airflow: <b>${fmt(Q,3)} m³/s</b> = <b>${fmt(Q*3600)} m³/h</b> = <b>${fmt(Q*2118.88)} CFM</b>`);
+}
+function calcEC(){
+  const I=v('ec_i'),t=v('ec_t'),k=v('ec_k');
+  if(!I||!t)return show('ec_out','Enter all values.');
+  const S=Math.sqrt(I*I*t)/k;
+  const std=[1.5,2.5,4,6,10,16,25,35,50,70,95,120,150,185,240,300];
+  show('ec_out',`Minimum cross-section: <b>${fmt(S,1)} mm²</b>\nNext standard size: <b>${nextStd(S,std)} mm²</b>`);
+}
+function calcET(){
+  const kW=v('et_kw'),h=v('et_h'),d=v('et_d'),r=v('et_r'),c=document.getElementById('et_c').value;
+  if(!kW||!h||!d)return show('et_out','Enter all values.');
+  const kWh=kW*h*d;
+  show('et_out',`Energy: <b>${fmt(kWh)} kWh</b>\nCost: <b>${c}${fmt(kWh*r,2)}</b>\nPer day: <b>${c}${fmt(kW*h*r,2)}</b>`);
+}
+
+function calcEN(){
+  const H=v('en_h'),W=v('en_w'),D=v('en_d'),P=v('en_p'),f=parseFloat(document.getElementById('en_m').value),k=v('en_k'),Ta=v('en_ta'),Tm=v('en_tm');
+  if(!H||!W||!D||!P)return show('en_out','Enter all values.');
+  const A=2*(H*W)+2*(H*D)+2*(W*D);
+  const dT=P/(k*A*f);
+  const Ti=Ta+dT;
+  const Pmax=(Tm-Ta)*k*A*f;
+  const ok=Ti<=Tm?'within limit ✓':'<span style="color:var(--err)">EXCEEDS limit — reduce load, larger enclosure, or forced ventilation ✗</span>';
+  show('en_out',`Surface area: <b>${fmt(A,2)} m²</b> (effective ${fmt(A*f,2)} m²)\nTemperature rise: <b>${fmt(dT,1)} K</b>\nInternal temperature: <b>${fmt(Ti,1)} °C</b> — ${ok}\nMax heat load for ${fmt(Tm,0)} °C limit: <b>${fmt(Pmax,0)} W</b>`);
+}
+</script>
+</body>
+</html>

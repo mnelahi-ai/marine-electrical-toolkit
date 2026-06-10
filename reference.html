@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrical Engineering Reference Tables</title>
+<style>
+  :root{--bg:#0f1722;--panel:#16222f;--panel2:#1d2c3d;--line:#2b4258;--txt:#e8eef4;--mut:#8fa6ba;--acc:#34b8a0;--acc2:#3d9be9;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+  header{padding:22px 28px 14px;border-bottom:1px solid var(--line)}
+  header h1{font-size:21px;font-weight:600} header p{color:var(--mut);font-size:13px;margin-top:4px}
+  .bar{display:flex;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line);font-size:13px}
+  .bar a{color:var(--mut);text-decoration:none}.bar a.on{color:var(--acc);font-weight:600}
+  nav{display:flex;flex-wrap:wrap;gap:6px;padding:12px 28px;border-bottom:1px solid var(--line);background:var(--panel)}
+  nav button{background:var(--panel2);color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:12.5px;cursor:pointer}
+  nav button.on{background:var(--acc);color:#06251f;border-color:var(--acc);font-weight:600}
+  main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+  section{display:none} section.on{display:block}
+  h2{font-size:17px;margin-bottom:6px}
+  .ref{color:var(--mut);font-size:12px;margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:18px}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left}
+  th{background:var(--panel2);color:var(--mut)}
+  footer{border-top:1px solid var(--line);padding:16px 28px;color:var(--mut);font-size:11.5px;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Electrical Reference Tables</h1>
+  <p>Quick-reference data for design and commissioning. Typical/indicative values — always verify against the governing standard and manufacturer data.</p>
+</header>
+<div class="bar">
+  <a href="index.html">Calculators</a><a href="checklists.html">Checklists</a>
+  <a href="testforms.html">Test Forms</a><a href="reference.html" class="on">Reference</a>
+</div>
+<nav id="nav"></nav>
+<main>
+
+<section data-t="Protection (ANSI)">
+  <h2>Common Protection Functions — ANSI/IEEE C37.2 device numbers</h2>
+  <p class="ref">Selection per coordination study; this is a lookup, not a recommendation.</p>
+  <table><tr><th>ANSI</th><th>Function</th><th>Typical use</th></tr>
+  <tr><td>27 / 59</td><td>Under / Over voltage</td><td>Generators, motors, bus monitoring</td></tr>
+  <tr><td>32</td><td>Reverse / directional power</td><td>Generator anti-motoring</td></tr>
+  <tr><td>37</td><td>Undercurrent / underpower</td><td>Pump dry-run protection</td></tr>
+  <tr><td>46</td><td>Negative sequence / unbalance</td><td>Motors, generators</td></tr>
+  <tr><td>47</td><td>Phase sequence voltage</td><td>Motor rotation protection</td></tr>
+  <tr><td>49</td><td>Thermal overload</td><td>Motors, transformers, cables</td></tr>
+  <tr><td>50 / 51</td><td>Instantaneous / time overcurrent</td><td>Feeders, motors, transformers</td></tr>
+  <tr><td>50G/51G / 50N/51N</td><td>Earth fault (measured / residual)</td><td>All circuits</td></tr>
+  <tr><td>52</td><td>AC circuit breaker</td><td>—</td></tr>
+  <tr><td>55</td><td>Power factor</td><td>Capacitor banks, sync motors</td></tr>
+  <tr><td>64 / 64R</td><td>Earth fault / rotor earth</td><td>IT systems, generator rotor</td></tr>
+  <tr><td>67 / 67N</td><td>Directional OC / EF</td><td>Parallel feeders, ring systems</td></tr>
+  <tr><td>81 O/U</td><td>Over / under frequency</td><td>Generators, load shedding</td></tr>
+  <tr><td>86</td><td>Lockout relay</td><td>Trip and block reclose</td></tr>
+  <tr><td>87 T/G/M/B</td><td>Differential (TX/gen/motor/bus)</td><td>Unit protection</td></tr></table>
+</section>
+
+<section data-t="Motor FLC & Trip">
+  <h2>Motor FLC &amp; Suggested Trip Sizes — 415 V 3PH (PF 0.85, η typical)</h2>
+  <p class="ref">Computed: I = kW×1000/(√3×415×PF×η). Breaker = next standard ≥ 125% FLC. Verify vs nameplate + coordination.</p>
+  <table id="mtbl"><tr><th>Motor kW</th><th>η %</th><th>FLC (A)</th><th>OL set (A)</th><th>Breaker (A)</th></tr></table>
+</section>
+
+<section data-t="Cable Data (XLPE)">
+  <h2>Typical LV XLPE Cable Parameters — Cu, 3/4-core</h2>
+  <p class="ref">TYPICAL catalogue values (90 °C conductor, R at 20 °C ≈ ×0.8 of 90 °C value). Use manufacturer datasheet for design — these are for estimation only.</p>
+  <table><tr><th>Size mm²</th><th>R₉₀ Ω/km</th><th>X Ω/km</th><th>Rating A (45 °C amb, indicative)</th></tr>
+  <tr><td>1.5</td><td>15.6</td><td>0.115</td><td>14</td></tr>
+  <tr><td>2.5</td><td>9.45</td><td>0.110</td><td>20</td></tr>
+  <tr><td>4</td><td>5.88</td><td>0.105</td><td>27</td></tr>
+  <tr><td>6</td><td>3.93</td><td>0.100</td><td>34</td></tr>
+  <tr><td>10</td><td>2.33</td><td>0.094</td><td>48</td></tr>
+  <tr><td>16</td><td>1.47</td><td>0.090</td><td>64</td></tr>
+  <tr><td>25</td><td>0.927</td><td>0.086</td><td>85</td></tr>
+  <tr><td>35</td><td>0.668</td><td>0.083</td><td>105</td></tr>
+  <tr><td>50</td><td>0.494</td><td>0.083</td><td>130</td></tr>
+  <tr><td>70</td><td>0.342</td><td>0.082</td><td>165</td></tr>
+  <tr><td>95</td><td>0.247</td><td>0.082</td><td>200</td></tr>
+  <tr><td>120</td><td>0.196</td><td>0.080</td><td>230</td></tr>
+  <tr><td>150</td><td>0.160</td><td>0.080</td><td>265</td></tr>
+  <tr><td>185</td><td>0.128</td><td>0.080</td><td>300</td></tr>
+  <tr><td>240</td><td>0.098</td><td>0.079</td><td>355</td></tr>
+  <tr><td>300</td><td>0.079</td><td>0.079</td><td>405</td></tr></table>
+</section>
+
+<section data-t="IR Test Voltages">
+  <h2>Insulation Resistance Test Voltages — common practice</h2>
+  <p class="ref">Per IEC 60092-350 / IEEE 43 style practice. Project spec governs.</p>
+  <table><tr><th>System</th><th>Test V DC</th><th>Typical minimum</th></tr>
+  <tr><td>ELV / 24 V DC control</td><td>250 V</td><td>1 MΩ (electronics disconnected)</td></tr>
+  <tr><td>LV ≤ 500 V (415/240 V)</td><td>500 V</td><td>1 MΩ in service; ≥100 MΩ new at FAT (per spec)</td></tr>
+  <tr><td>LV 500–1000 V</td><td>1000 V</td><td>1 MΩ minimum</td></tr>
+  <tr><td>HV 3.3–6.6 kV</td><td>2500–5000 V</td><td>(kV+1) MΩ rule of thumb; PI ≥ 2 for machines</td></tr>
+  <tr><td>HV ≥ 11 kV</td><td>5000 V</td><td>(kV+1) MΩ; per IEEE 43 for rotating machines</td></tr></table>
+  <p class="ref">Disconnect VSDs, AMS I/O, nav/comms electronics before testing. Temperature-correct readings (IR roughly halves per +10 °C).</p>
+</section>
+
+<section data-t="Lighting Lux">
+  <h2>Typical Average Illuminance Levels</h2>
+  <p class="ref">Indicative design targets in the style of SS 531 / EN 12464 / class guidance. Project spec and flag requirements govern.</p>
+  <table><tr><th>Area</th><th>Typical lux</th></tr>
+  <tr><td>Engine room (general)</td><td>200–300</td></tr>
+  <tr><td>Engine room (work points, switchboard front)</td><td>300–500</td></tr>
+  <tr><td>Wheelhouse (day; dimmable for night)</td><td>300</td></tr>
+  <tr><td>Accommodation cabins</td><td>100–150</td></tr>
+  <tr><td>Mess / galley</td><td>200–300</td></tr>
+  <tr><td>Corridors / stairs</td><td>100</td></tr>
+  <tr><td>Deck working areas</td><td>100–200</td></tr>
+  <tr><td>Offices / control rooms</td><td>300–500</td></tr>
+  <tr><td>Workshops</td><td>300–500</td></tr>
+  <tr><td>Storerooms</td><td>100</td></tr>
+  <tr><td>Emergency lighting (escape routes)</td><td>≥1 lux at floor (per SOLAS/class)</td></tr></table>
+  <p class="ref">Lumen method: N = E×A/(F×UF×MF). E=target lux, A=area, F=lamp lumens, UF≈0.4–0.6, MF≈0.8.</p>
+</section>
+
+<section data-t="Ex Marking Guide">
+  <h2>Hazardous Area (Ex) Marking — quick guide</h2>
+  <p class="ref">Per IEC 60079 series. For selection use the project HAE/Ex register and the equipment certificate — never the marking alone.</p>
+  <table><tr><th>Element</th><th>Meaning</th><th>Examples</th></tr>
+  <tr><td>Ex d</td><td>Flameproof enclosure</td><td>Motors, switchgear in Zone 1</td></tr>
+  <tr><td>Ex e</td><td>Increased safety</td><td>Terminal/junction boxes, luminaires</td></tr>
+  <tr><td>Ex i (ia/ib/ic)</td><td>Intrinsic safety</td><td>Instrumentation (ia = Zone 0)</td></tr>
+  <tr><td>Ex p</td><td>Pressurised</td><td>Analyser houses, panels</td></tr>
+  <tr><td>Ex n</td><td>Non-sparking</td><td>Zone 2 equipment</td></tr>
+  <tr><td>Ex m</td><td>Encapsulation</td><td>Solenoids, sensors</td></tr>
+  <tr><td>Gas group IIA/IIB/IIC</td><td>Propane / ethylene / hydrogen-acetylene severity</td><td>IIC most severe</td></tr>
+  <tr><td>T1–T6</td><td>Max surface temp 450/300/200/135/100/85 °C</td><td>Match to gas auto-ignition temp</td></tr>
+  <tr><td>Zone 0/1/2</td><td>Gas continuously / likely / unlikely present</td><td>Category 1G/2G/3G equipment</td></tr>
+  <tr><td>EPL Ga/Gb/Gc</td><td>Equipment protection level (gas)</td><td>Ga = Zone 0 capable</td></tr></table>
+  <p class="ref">Rules: unused entries plugged with CERTIFIED stopping plugs; glands certified for the protection concept; no modification of certified enclosures; terminal heat dissipation within certificate table (see Enclosure Heat calculator).</p>
+</section>
+
+</main>
+<footer>
+  All tables are indicative reference data compiled from public standards practice (IEEE C37.2, IEC 60079, IEC 60092, EN 12464/SS 531 style values). They do not replace the governing standard, class rules, project specification or manufacturer certificates.
+</footer>
+<script>
+const sections=[...document.querySelectorAll('section')], nav=document.getElementById('nav');
+sections.forEach((s,i)=>{const b=document.createElement('button');b.textContent=s.dataset.t;
+  b.onclick=()=>{sections.forEach(x=>x.classList.remove('on'));nav.querySelectorAll('button').forEach(x=>x.classList.remove('on'));s.classList.add('on');b.classList.add('on');};
+  nav.appendChild(b);if(i===0){s.classList.add('on');b.classList.add('on');}});
+// Motor table computed live
+const std=[6,10,16,20,25,32,40,50,63,80,100,125,160,200,250,320,400,500,630,800];
+const effOf=k=>k<=1.1?0.78:k<=4?0.84:k<=15?0.89:k<=45?0.92:k<=110?0.94:0.95;
+const t=document.getElementById('mtbl');
+[0.37,0.55,0.75,1.1,1.5,2.2,3,4,5.5,7.5,11,15,18.5,22,30,37,45,55,75,90,110,132,160,200,250].forEach(kw=>{
+  const eff=effOf(kw), I=kw*1000/(Math.sqrt(3)*415*0.85*eff);
+  const br=std.find(s=>s>=I*1.25)||'—';
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${kw}</td><td>${Math.round(eff*100)}</td><td>${I.toFixed(1)}</td><td>${(I*1.05).toFixed(1)}</td><td>${br}</td>`;
+  t.appendChild(tr);
+});
+</script>
+</body>
+</html>

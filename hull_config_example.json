@@ -1,0 +1,18 @@
+{
+  "hull": "H699",
+  "rev": "Rev 1",
+  "date": "10/06/2026",
+  "prepared_by": "Mashuk",
+  "contractor": "Z-POWER AUTOMATION PTE LTD | STRATEGIC MARINE (S) PTE LTD",
+  "vessel_type": "42.0 M Fast Crew Boat",
+  "hull_numbers": "H699",
+  "classification": "LR 100A1 SSC WORKBOAT MONO G4",
+  "voltage_system": "415/240 VAC 3PH 4W 50Hz + 24 VDC",
+  "main_engine": "[TBC]",
+  "gearbox": "[TBC]",
+  "bow_thruster": "[TBC]",
+  "generators": "[TBC]",
+  "voltage_separator": "~",
+  "ams_panel": "[TBC]",
+  "alarm_standards": "LR SSC 2024 | IEC 62933"
+}

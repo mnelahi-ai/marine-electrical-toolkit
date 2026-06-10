@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrical Test Forms — Continuity / Megger / Certificate</title>
+<style>
+  :root{--bg:#0f1722;--panel:#16222f;--panel2:#1d2c3d;--line:#2b4258;--txt:#e8eef4;--mut:#8fa6ba;--acc:#34b8a0;--acc2:#3d9be9;--err:#e96a5a;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+  header{padding:22px 28px 14px;border-bottom:1px solid var(--line)}
+  header h1{font-size:21px;font-weight:600} header p{color:var(--mut);font-size:13px;margin-top:4px}
+  .bar{display:flex;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line);font-size:13px}
+  .bar a{color:var(--mut);text-decoration:none}.bar a.on{color:var(--acc);font-weight:600}
+  main{max-width:980px;margin:0 auto;padding:24px 20px 60px}
+  h2{font-size:17px;margin:18px 0 8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:10px}
+  label{display:block;font-size:11.5px;color:var(--mut);margin-bottom:3px}
+  input,select{width:100%;background:var(--bg);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px}
+  .btn{background:var(--acc2);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;margin:6px 6px 0 0}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px}
+  th,td{border:1px solid var(--line);padding:6px;text-align:left}
+  th{background:var(--panel2);color:var(--mut)}
+  td input{padding:5px}
+  .pass{color:#7be0c3;font-weight:700}.fail{color:var(--err);font-weight:700}
+  .note{font-size:11.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+  footer{border-top:1px solid var(--line);padding:16px 28px;color:var(--mut);font-size:11.5px;line-height:1.6}
+  @media print{.bar,.btn,header p{display:none}body{background:#fff;color:#000}th,td{border-color:#999}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🧪 Electrical Test Forms</h1>
+  <p>Continuity &amp; insulation resistance (megger) test sheet with automatic pass/fail, plus a general test certificate. Print or export as record.</p>
+</header>
+<div class="bar">
+  <a href="index.html">Calculators</a><a href="checklists.html">Checklists</a>
+  <a href="testforms.html" class="on">Test Forms</a><a href="reference.html">Reference</a>
+</div>
+<main>
+
+<h2>Continuity &amp; Insulation Resistance Test Sheet</h2>
+<div class="card">
+  <div class="grid">
+    <div><label>Project / Vessel</label><input id="m_proj"></div>
+    <div><label>Drawing / Cable schedule ref</label><input id="m_dwg"></div>
+    <div><label>Test instrument + serial</label><input id="m_inst"></div>
+    <div><label>Calibration due</label><input id="m_cal"></div>
+    <div><label>Tested by / Date</label><input id="m_by"></div>
+    <div><label>Test voltage (V DC)</label>
+      <select id="m_tv"><option>250</option><option selected>500</option><option>1000</option><option>2500</option><option>5000</option></select></div>
+    <div><label>Minimum acceptable IR (MΩ)</label><input id="m_min" type="number" value="1" step="0.5"></div>
+  </div>
+  <table id="mt"><thead><tr>
+    <th>Cable / Circuit tag</th><th>From</th><th>To</th><th>Cont. (Ω)</th>
+    <th>IR L1-E</th><th>IR L2-E</th><th>IR L3-E</th><th>IR L-L min</th><th>Result</th>
+  </tr></thead><tbody></tbody></table>
+  <button class="btn" onclick="addRow()">+ Add circuit</button>
+  <button class="btn" onclick="evalAll()">Evaluate Pass/Fail</button>
+  <button class="btn" onclick="megCSV()">Export CSV</button>
+  <button class="btn" onclick="window.print()">Print</button>
+  <p class="note">Common practice: 500 V DC test for 415 V systems, min 1 MΩ field acceptance (higher for new cables — many specs require ≥100 MΩ at FAT); 1 kV/2.5 kV/5 kV for HV per spec. Disconnect electronics (VSDs, AMS I/O, nav equipment) before testing. Record ambient temperature; IR halves roughly every 10 °C rise.</p>
+</div>
+
+<h2>General Test Certificate</h2>
+<div class="card" id="cert">
+  <div class="grid">
+    <div><label>Certificate No.</label><input></div>
+    <div><label>Project / Vessel / Hull</label><input></div>
+    <div><label>Equipment / System under test</label><input></div>
+    <div><label>Location</label><input></div>
+    <div><label>Specification / Standard applied</label><input></div>
+    <div><label>Test procedure ref</label><input></div>
+    <div><label>Test instruments used (ID + cal due)</label><input></div>
+    <div><label>Result summary</label><select><option>PASS</option><option>FAIL</option><option>PASS WITH COMMENTS</option></select></div>
+    <div><label>Comments / punch items</label><input></div>
+    <div><label>Tested by / Date</label><input></div>
+    <div><label>Witnessed by (Client/Class) / Date</label><input></div>
+    <div><label>Approved by / Date</label><input></div>
+  </div>
+  <button class="btn" onclick="window.print()">Print Certificate</button>
+  <p class="note">Attach raw test records (IR sheets, injection results, load test logs) to this certificate. One certificate per system/test scope.</p>
+</div>
+
+</main>
+<footer>
+  Generic forms based on common industry practice. Test voltages and acceptance criteria must follow your project specification, class rules and equipment OEM instructions. Always isolate, prove dead, and apply LOTO before testing.
+</footer>
+<script>
+const tb=document.querySelector('#mt tbody');
+function addRow(){
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td><input></td><td><input></td><td><input></td><td><input type="number" step="0.01"></td>'+
+    '<td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td class="res">—</td>';
+  tb.appendChild(tr);
+}
+function evalAll(){
+  const min=parseFloat(document.getElementById('m_min').value)||1;
+  [...tb.rows].forEach(r=>{
+    const vals=[4,5,6,7].map(i=>parseFloat(r.cells[i].querySelector('input').value));
+    const entered=vals.filter(v=>!isNaN(v));
+    const res=r.cells[8];
+    if(!entered.length){res.textContent='—';res.className='res';return;}
+    const ok=entered.every(v=>v>=min);
+    res.textContent=ok?'PASS':'FAIL';
+    res.className='res '+(ok?'pass':'fail');
+  });
+}
+function megCSV(){
+  let csv='Project,'+JSON.stringify(document.getElementById('m_proj').value)+'\nTest V,'+document.getElementById('m_tv').value+',Min IR MOhm,'+document.getElementById('m_min').value+'\nTag,From,To,Cont Ohm,IR L1-E,IR L2-E,IR L3-E,IR L-L,Result\n';
+  [...tb.rows].forEach(r=>{
+    const cells=[...r.cells].map((c,i)=>i<8?(c.querySelector('input')?.value??''):c.textContent);
+    csv+=cells.map(x=>JSON.stringify(x)).join(',')+'\n';
+  });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='IR_Test_Sheet.csv'; a.click();
+}
+for(let i=0;i<6;i++)addRow();
+</script>
+</body>
+</html>
