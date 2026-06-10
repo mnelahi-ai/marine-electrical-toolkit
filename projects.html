@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Delivered marine electrical projects — hybrid fast crew boat power systems, main switchboards, AMS architectures. Concept visuals by Mashuk Elahi.">
+<title>Delivered Projects — Marine Electrical Concepts</title>
+<style>
+  :root{--bg:#0f1722;--panel:#16222f;--panel2:#1d2c3d;--line:#2b4258;--txt:#e8eef4;--mut:#8fa6ba;--acc:#34b8a0;--acc2:#3d9be9;--amber:#e9a23d;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+  header{padding:22px 28px 14px;border-bottom:1px solid var(--line)}
+  header h1{font-size:21px;font-weight:600} header p{color:var(--mut);font-size:13px;margin-top:4px;max-width:760px;line-height:1.5}
+  .bar{display:flex;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line);font-size:13px;flex-wrap:wrap}
+  .bar a{color:var(--mut);text-decoration:none}.bar a.on{color:var(--acc);font-weight:600}
+  .bar a.port{margin-left:auto;color:var(--amber);font-weight:600}
+  main{max-width:960px;margin:0 auto;padding:24px 20px 60px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:26px}
+  .card h2{font-size:18px;margin-bottom:4px}
+  .tagrow{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 14px}
+  .tag{background:var(--panel2);border:1px solid var(--line);color:var(--mut);font-size:11px;border-radius:20px;padding:3px 10px}
+  .sub{color:var(--mut);font-size:13px;line-height:1.6;margin-bottom:14px}
+  svg{width:100%;height:auto;background:#0a111b;border:1px solid var(--line);border-radius:8px}
+  svg text{font-family:'Segoe UI',system-ui,sans-serif}
+  .foot{color:var(--mut);font-size:11.5px;margin-top:10px;line-height:1.5}
+  footer{border-top:1px solid var(--line);padding:16px 28px;color:var(--mut);font-size:11.5px;line-height:1.6}
+  footer a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🚢 Delivered Projects — Power System Concepts</h1>
+  <p>Concept-level visuals of marine electrical systems I have engineered and delivered — shown by vessel/asset type. No client drawings, drawing numbers, or proprietary documents are reproduced. Full career portfolio: <a href="https://mnelahi-ai.github.io/portfolio/" style="color:var(--acc)">mnelahi-ai.github.io/portfolio</a></p>
+</header>
+<div class="bar">
+  <a href="index.html">Calculators</a><a href="checklists.html">Checklists</a>
+  <a href="testforms.html">Test Forms</a><a href="reference.html">Reference</a>
+  <a href="projects.html" class="on">Projects</a>
+  <a href="https://mnelahi-ai.github.io/portfolio/" class="port">Portfolio ↗</a>
+</div>
+<main>
+
+<div class="card">
+  <h2>Hybrid Fast Crew Boat — 4-Source Power Architecture (Concept SLD)</h2>
+  <div class="tagrow"><span class="tag">42 m FCB</span><span class="tag">3 × 100 kW gensets</span><span class="tag">120 kVA battery converter</span><span class="tag">75 kVA shore</span><span class="tag">LR class</span><span class="tag">415/240 V 50 Hz</span></div>
+  <p class="sub">Split-bus main switchboard synchronising four sources: three diesel gensets, a battery/grid converter fed from a Li-ion bank (zero-emission "green cabin" mode at anchor/alongside), and an isolated shore connection. Distribution via motor control centres and power distribution boards; dedicated 24 V DC system with battery panels and gyro-stabiliser board.</p>
+  <svg viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8fa6ba"/></marker></defs>
+    <!-- sources -->
+    <g font-size="12" fill="#e8eef4" text-anchor="middle">
+      <rect x="40" y="30" width="130" height="56" rx="6" fill="#1d2c3d" stroke="#3d9be9"/>
+      <text x="105" y="53">GEN 1</text><text x="105" y="71" fill="#8fa6ba">100 kW · 415 V</text>
+      <rect x="200" y="30" width="130" height="56" rx="6" fill="#1d2c3d" stroke="#3d9be9"/>
+      <text x="265" y="53">GEN 2</text><text x="265" y="71" fill="#8fa6ba">100 kW · 415 V</text>
+      <rect x="360" y="30" width="130" height="56" rx="6" fill="#1d2c3d" stroke="#3d9be9"/>
+      <text x="425" y="53">GEN 3</text><text x="425" y="71" fill="#8fa6ba">100 kW · 415 V</text>
+      <rect x="540" y="30" width="170" height="56" rx="6" fill="#11332b" stroke="#34b8a0"/>
+      <text x="625" y="48">BATTERY CONVERTER</text><text x="625" y="64" fill="#34b8a0">120 kVA · Li-ion BESS</text>
+      <text x="625" y="78" fill="#8fa6ba">zero-emission mode</text>
+      <rect x="760" y="30" width="150" height="56" rx="6" fill="#332a14" stroke="#e9a23d"/>
+      <text x="835" y="53">SHORE SUPPLY</text><text x="835" y="71" fill="#e9a23d">75 kVA iso. TX</text>
+    </g>
+    <!-- breakers to bus -->
+    <g stroke="#8fa6ba" stroke-width="1.6">
+      <line x1="105" y1="86" x2="105" y2="150"/><line x1="265" y1="86" x2="265" y2="150"/>
+      <line x1="425" y1="86" x2="425" y2="150"/><line x1="625" y1="86" x2="625" y2="150"/>
+      <line x1="835" y1="86" x2="835" y2="150"/>
+    </g>
+    <g fill="#0a111b" stroke="#e8eef4">
+      <circle cx="105" cy="118" r="8"/><circle cx="265" cy="118" r="8"/><circle cx="425" cy="118" r="8"/><circle cx="625" cy="118" r="8"/><circle cx="835" cy="118" r="8"/>
+    </g>
+    <text x="930" y="122" font-size="10" fill="#8fa6ba" text-anchor="end">ACBs +
+sync</text>
+    <!-- bus -->
+    <rect x="40" y="150" width="420" height="10" fill="#3d9be9"/>
+    <rect x="500" y="150" width="410" height="10" fill="#3d9be9"/>
+    <rect x="460" y="150" width="40" height="10" fill="#0a111b" stroke="#3d9be9" stroke-dasharray="4 3"/>
+    <text x="480" y="180" font-size="11" fill="#8fa6ba" text-anchor="middle">BUS-TIE</text>
+    <text x="60" y="142" font-size="11" fill="#3d9be9">MSB BUS A — 415 V 3PH 50 Hz</text>
+    <text x="908" y="142" font-size="11" fill="#3d9be9" text-anchor="end">MSB BUS B</text>
+    <!-- feeders -->
+    <g stroke="#8fa6ba" stroke-width="1.4" marker-end="url(#ar)">
+      <line x1="105" y1="160" x2="105" y2="225"/><line x1="245" y1="160" x2="245" y2="225"/>
+      <line x1="385" y1="160" x2="385" y2="225"/><line x1="555" y1="160" x2="555" y2="225"/>
+      <line x1="700" y1="160" x2="700" y2="225"/><line x1="845" y1="160" x2="845" y2="225"/>
+    </g>
+    <g font-size="11.5" fill="#e8eef4" text-anchor="middle">
+      <rect x="50" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="105" y="247">MCC1 + PDB1</text><text x="105" y="263" fill="#8fa6ba" font-size="10">E/R machinery</text>
+      <rect x="190" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="245" y="247">MCC2</text><text x="245" y="263" fill="#8fa6ba" font-size="10">vent · pumps · FiFi</text>
+      <rect x="330" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="385" y="247">PDB2</text><text x="385" y="263" fill="#8fa6ba" font-size="10">accom · galley</text>
+      <rect x="500" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="555" y="247">PDB3</text><text x="555" y="263" fill="#8fa6ba" font-size="10">passenger deck</text>
+      <rect x="645" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="700" y="247">PDB4</text><text x="700" y="263" fill="#8fa6ba" font-size="10">bridge · nav/comms</text>
+      <rect x="790" y="228" width="110" height="46" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="845" y="247">Heavy consumers</text><text x="845" y="263" fill="#8fa6ba" font-size="10">75 kW BT · 35 kW gyro</text>
+    </g>
+    <!-- DC system -->
+    <g stroke="#8fa6ba" stroke-width="1.4" marker-end="url(#ar)">
+      <line x1="105" y1="274" x2="105" y2="340"/><line x1="700" y1="274" x2="700" y2="340"/>
+    </g>
+    <g font-size="11.5" fill="#e8eef4" text-anchor="middle">
+      <rect x="40" y="344" width="240" height="52" rx="5" fill="#11332b" stroke="#34b8a0"/>
+      <text x="160" y="364">24 V DC SYSTEM</text>
+      <text x="160" y="382" fill="#8fa6ba" font-size="10">chargers · DCDB · battery panels ×4 · gyro DB</text>
+      <rect x="580" y="344" width="240" height="52" rx="5" fill="#16222f" stroke="#2b4258"/>
+      <text x="700" y="364">AMS / ALARM SYSTEM</text>
+      <text x="700" y="382" fill="#8fa6ba" font-size="10">UPS-backed workstations + EAS</text>
+    </g>
+    <!-- mode strip -->
+    <g font-size="11" fill="#8fa6ba">
+      <rect x="40" y="430" width="870" height="100" rx="8" fill="#0e1722" stroke="#2b4258"/>
+      <text x="60" y="455" fill="#e8eef4" font-size="12.5">OPERATING MODES (concept)</text>
+      <text x="60" y="478">① Transit — gensets share load, converter charges bank</text>
+      <text x="60" y="498">② Green cabin — converter alone carries hotel load, gensets off (zero emission, silent)</text>
+      <text x="60" y="518">③ Alongside — shore TX with interlock; converter peak-shaves; ④ Boost — sources in parallel via sync</text>
+    </g>
+  </svg>
+  <p class="foot">Outcome: ~50% fuel-burn reduction in low-load operation; first-pass class approval. Concept reflects engineering scope only.</p>
+</div>
+
+<div class="card">
+  <h2>Main Switchboard — Section Concept (415/240 V, 4-source)</h2>
+  <div class="tagrow"><span class="tag">Aluminium construction</span><span class="tag">45 °C ambient</span><span class="tag">Manual + auto sync</span><span class="tag">Mode flowcharts FCT1-6</span></div>
+  <p class="sub">Front-of-board arrangement concept for a hybrid FCB main switchboard: generator incomer sections with metering and parallel/protection circuits, hybrid-converter incomer with its own protection, bus-tie, shore incomer with interlock, and outgoing feeder sections.</p>
+  <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
+    <g font-size="11.5" text-anchor="middle">
+      <rect x="30" y="40" width="120" height="200" rx="4" fill="#16222f" stroke="#3d9be9"/>
+      <text x="90" y="65" fill="#e8eef4">GEN 1</text><text x="90" y="82" fill="#8fa6ba" font-size="10">incomer · metering</text>
+      <rect x="60" y="100" width="60" height="34" rx="3" fill="#0a111b" stroke="#8fa6ba"/><text x="90" y="121" fill="#8fa6ba" font-size="10">ACB</text>
+      <rect x="60" y="150" width="60" height="60" rx="3" fill="#0a111b" stroke="#2b4258"/><text x="90" y="176" fill="#8fa6ba" font-size="9">kW · V · A
+sync · prot.</text>
+      <rect x="160" y="40" width="120" height="200" rx="4" fill="#16222f" stroke="#3d9be9"/>
+      <text x="220" y="65" fill="#e8eef4">GEN 2</text><text x="220" y="82" fill="#8fa6ba" font-size="10">incomer · metering</text>
+      <rect x="190" y="100" width="60" height="34" rx="3" fill="#0a111b" stroke="#8fa6ba"/><text x="220" y="121" fill="#8fa6ba" font-size="10">ACB</text>
+      <rect x="190" y="150" width="60" height="60" rx="3" fill="#0a111b" stroke="#2b4258"/><text x="220" y="176" fill="#8fa6ba" font-size="9">kW · V · A
+sync · prot.</text>
+      <rect x="290" y="40" width="120" height="200" rx="4" fill="#16222f" stroke="#3d9be9"/>
+      <text x="350" y="65" fill="#e8eef4">GEN 3</text><text x="350" y="82" fill="#8fa6ba" font-size="10">incomer · metering</text>
+      <rect x="320" y="100" width="60" height="34" rx="3" fill="#0a111b" stroke="#8fa6ba"/><text x="350" y="121" fill="#8fa6ba" font-size="10">ACB</text>
+      <rect x="320" y="150" width="60" height="60" rx="3" fill="#0a111b" stroke="#2b4258"/><text x="350" y="176" fill="#8fa6ba" font-size="9">kW · V · A
+sync · prot.</text>
+      <rect x="420" y="40" width="100" height="200" rx="4" fill="#1d2c3d" stroke="#8fa6ba"/>
+      <text x="470" y="65" fill="#e8eef4">BUS-TIE</text>
+      <rect x="445" y="100" width="50" height="34" rx="3" fill="#0a111b" stroke="#8fa6ba"/><text x="470" y="121" fill="#8fa6ba" font-size="10">BT</text>
+      <text x="470" y="170" fill="#8fa6ba" font-size="10">bus control ·
+manual sync</text>
+      <rect x="530" y="40" width="130" height="200" rx="4" fill="#11332b" stroke="#34b8a0"/>
+      <text x="595" y="65" fill="#e8eef4">HYBRID</text><text x="595" y="82" fill="#34b8a0" font-size="10">converter incomer</text>
+      <rect x="565" y="100" width="60" height="34" rx="3" fill="#0a111b" stroke="#34b8a0"/><text x="595" y="121" fill="#8fa6ba" font-size="10">MCCB</text>
+      <rect x="565" y="150" width="60" height="60" rx="3" fill="#0a111b" stroke="#2b4258"/><text x="595" y="176" fill="#8fa6ba" font-size="9">parallel ·
+protection ·
+mode logic</text>
+      <rect x="670" y="40" width="120" height="200" rx="4" fill="#332a14" stroke="#e9a23d"/>
+      <text x="730" y="65" fill="#e8eef4">SHORE</text><text x="730" y="82" fill="#e9a23d" font-size="10">interlocked incomer</text>
+      <rect x="700" y="100" width="60" height="34" rx="3" fill="#0a111b" stroke="#e9a23d"/><text x="730" y="121" fill="#8fa6ba" font-size="10">MCCB</text>
+      <text x="730" y="170" fill="#8fa6ba" font-size="10">iso. transformer
+changeover</text>
+      <rect x="800" y="40" width="130" height="200" rx="4" fill="#16222f" stroke="#2b4258"/>
+      <text x="865" y="65" fill="#e8eef4">FEEDERS</text>
+      <text x="865" y="82" fill="#8fa6ba" font-size="10">415/240 V outgoing</text>
+      <g fill="#0a111b" stroke="#2b4258">
+        <rect x="820" y="100" width="40" height="22" rx="2"/><rect x="870" y="100" width="40" height="22" rx="2"/>
+        <rect x="820" y="130" width="40" height="22" rx="2"/><rect x="870" y="130" width="40" height="22" rx="2"/>
+        <rect x="820" y="160" width="40" height="22" rx="2"/><rect x="870" y="160" width="40" height="22" rx="2"/>
+        <rect x="820" y="190" width="40" height="22" rx="2"/><rect x="870" y="190" width="40" height="22" rx="2"/>
+      </g>
+    </g>
+    <text x="480" y="275" font-size="11" fill="#8fa6ba" text-anchor="middle">Generator sections ×3 · bus-tie · hybrid-converter section · interlocked shore section · feeder sections — mode transitions governed by operation-philosophy flowcharts</text>
+  </svg>
+</div>
+
+<div class="card">
+  <h2>Alarm Monitoring System (AMS) — Architecture Concept</h2>
+  <div class="tagrow"><span class="tag">Redundant Ethernet</span><span class="tag">Operator workstations</span><span class="tag">Extension alarm system</span><span class="tag">UPS-backed</span><span class="tag">Fleet-standardised I/O</span></div>
+  <p class="sub">Ship automation architecture of the class deployed across a multi-hull crew-boat programme: distributed I/O collecting machinery, bilge, tank, fire and power-system signals onto a redundant 100BASE-T network serving bridge and mess-room operator workstations, with an extension alarm system for unmanned-space watchkeeping (dead-man, group alarms, data logging, trend and replay).</p>
+  <svg viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#8fa6ba"/></marker></defs>
+    <!-- network rings -->
+    <rect x="80" y="170" width="800" height="8" fill="#3d9be9"/>
+    <rect x="80" y="186" width="800" height="8" fill="#34b8a0"/>
+    <text x="90" y="163" font-size="11" fill="#3d9be9">NETWORK A — Ethernet 100BASE-T</text>
+    <text x="870" y="212" font-size="11" fill="#34b8a0" text-anchor="end">NETWORK B — redundant</text>
+    <!-- top: workstations -->
+    <g font-size="11.5" fill="#e8eef4" text-anchor="middle">
+      <rect x="120" y="40" width="180" height="70" rx="6" fill="#16222f" stroke="#3d9be9"/>
+      <text x="210" y="65">OWS 1 — BRIDGE</text>
+      <text x="210" y="83" fill="#8fa6ba" font-size="10">TFT · trackball · alarm/ack</text>
+      <text x="210" y="98" fill="#8fa6ba" font-size="10">UPS-backed</text>
+      <rect x="390" y="40" width="180" height="70" rx="6" fill="#16222f" stroke="#3d9be9"/>
+      <text x="480" y="65">OWS 2 — MESS ROOM</text>
+      <text x="480" y="83" fill="#8fa6ba" font-size="10">group pages · trending</text>
+      <text x="480" y="98" fill="#8fa6ba" font-size="10">UPS-backed</text>
+      <rect x="660" y="40" width="180" height="70" rx="6" fill="#332a14" stroke="#e9a23d"/>
+      <text x="750" y="65">EAS PANELS — CABINS</text>
+      <text x="750" y="83" fill="#8fa6ba" font-size="10">watch call · dead-man</text>
+      <text x="750" y="98" fill="#8fa6ba" font-size="10">engineer on duty</text>
+    </g>
+    <g stroke="#8fa6ba" stroke-width="1.4">
+      <line x1="210" y1="110" x2="210" y2="170"/><line x1="480" y1="110" x2="480" y2="170"/><line x1="750" y1="110" x2="750" y2="170"/>
+    </g>
+    <!-- bottom: IO -->
+    <g stroke="#8fa6ba" stroke-width="1.4">
+      <line x1="160" y1="194" x2="160" y2="250"/><line x1="370" y1="194" x2="370" y2="250"/>
+      <line x1="580" y1="194" x2="580" y2="250"/><line x1="790" y1="194" x2="790" y2="250"/>
+    </g>
+    <g font-size="11.5" fill="#e8eef4" text-anchor="middle">
+      <rect x="80" y="252" width="160" height="86" rx="6" fill="#1d2c3d" stroke="#2b4258"/>
+      <text x="160" y="274">I/O — ENGINE ROOM</text>
+      <text x="160" y="292" fill="#8fa6ba" font-size="10">ME/gen alarms · exhaust</text>
+      <text x="160" y="307" fill="#8fa6ba" font-size="10">LO/FO press · temps</text>
+      <text x="160" y="322" fill="#8fa6ba" font-size="10">bilge high level</text>
+      <rect x="290" y="252" width="160" height="86" rx="6" fill="#1d2c3d" stroke="#2b4258"/>
+      <text x="370" y="274">I/O — POWER</text>
+      <text x="370" y="292" fill="#8fa6ba" font-size="10">MSB status · earth fault</text>
+      <text x="370" y="307" fill="#8fa6ba" font-size="10">hybrid/BESS alarms</text>
+      <text x="370" y="322" fill="#8fa6ba" font-size="10">chargers · UPS</text>
+      <rect x="500" y="252" width="160" height="86" rx="6" fill="#1d2c3d" stroke="#2b4258"/>
+      <text x="580" y="274">I/O — SAFETY</text>
+      <text x="580" y="292" fill="#8fa6ba" font-size="10">fire panel · aerosol</text>
+      <text x="580" y="307" fill="#8fa6ba" font-size="10">WT doors · hatches</text>
+      <text x="580" y="322" fill="#8fa6ba" font-size="10">nav lights · E-stops</text>
+      <rect x="710" y="252" width="160" height="86" rx="6" fill="#1d2c3d" stroke="#2b4258"/>
+      <text x="790" y="274">I/O — TANKS/HVAC</text>
+      <text x="790" y="292" fill="#8fa6ba" font-size="10">tank level gauging</text>
+      <text x="790" y="307" fill="#8fa6ba" font-size="10">vent fans · pumps run</text>
+      <text x="790" y="322" fill="#8fa6ba" font-size="10">A/C plant status</text>
+    </g>
+    <text x="480" y="365" font-size="11" fill="#8fa6ba" text-anchor="middle">Channel/tag-numbered alarm database · group alarms · data logging · record &amp; replay — standardised across a 12+ hull programme</text>
+  </svg>
+  <p class="foot">Architecture concept of the Mega-Guard-class AMS family used on fast crew boat programmes. Generic representation — not a reproduction of any project drawing.</p>
+</div>
+
+</main>
+<footer>
+  © Mashuk Elahi — <a href="https://mnelahi-ai.github.io/portfolio/">Career portfolio</a> · <a href="https://www.linkedin.com/in/mashukelahi">LinkedIn</a> · <a href="index.html">Free engineering toolkit</a>.
+  All visuals are concept-level engineering representations. No client-confidential drawings, schematics or proprietary data are reproduced.
+</footer>
+</body>
+</html>
